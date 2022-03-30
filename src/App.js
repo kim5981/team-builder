@@ -13,7 +13,7 @@ function App() {
   }
 
   const [formValues, setFormValues] = useState(initialValues)
-  const [errors, setErrors] = useState(null);
+  const [error, setError] = useState("");
 
   const updateForm = (inputName, inputValue) => {
     setFormValues(
@@ -29,9 +29,15 @@ function App() {
       role: formValues.role
   }
 
-  if (!formValues.name || !formValues.email || !formValues.role) {
-    setErrors("jfkdadak;");
+  if ( !formValues.name ) {
+    setError( "enter a username" );
     return;
+  } else if ( !formValues.email ) {
+    setError( "enter an email " );
+    return;
+  } else if ( !formValues.role ) {
+     setError( "select a role" );
+     return;
   }
   }
 
