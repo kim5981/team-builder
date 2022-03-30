@@ -3,6 +3,25 @@ import Form from "./Form"
 
 import React, { useState } from "react"
 
+function TeamMember (props) {
+  const { person} = props
+
+  if ( !person ) {
+      return <h2>loading info..</h2>
+  }
+
+  return (
+      <div className="person-wrapper">
+          <h2> { person.name } </h2>
+          <div className="person-info">
+          <p> Email: { person.email } </p>
+          <p>role: { person.role }</p>
+          </div>
+      </div>
+  )
+}
+
+
 function App() {
 
   //* set state
@@ -12,8 +31,9 @@ function App() {
     role: ""
   }
 
-  const [formValues, setFormValues] = useState(initialValues)
-  const [error, setError] = useState("");
+  const [ members, setMembers ] = useState([]);
+  const [ formValues, setFormValues ] = useState(initialValues)
+  const [ error, setError ] = useState("");
 
   const updateForm = (inputName, inputValue) => {
     setFormValues(
@@ -29,23 +49,32 @@ function App() {
       role: formValues.role
   }
 
-  if ( !formValues.name ) {
-    setError( "enter a username" );
+  if ( !formData.name || !formData.email || !formData.role ) {
+    setError( "enter all data" );
+    setFormValues(initialValues);
     return;
-  } else if ( !formValues.email ) {
+  } else if ( !formData.name ) {
+    setError( "enter a name" );
+    setFormValues(initialValues);
+    return;
+  } 
+  else if ( !formData.email ) {
     setError( "enter an email " );
+    setFormValues(initialValues)
     return;
-  } else if ( !formValues.role ) {
+  } else if ( !formData.role ) {
      setError( "select a role" );
      return;
   }
+
+
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="app-wrapper">
+        <h1>uwu inc.</h1>
+        { error && <p className="error"> { error } </p> }
         <Form values={ formValues } update={ updateForm } submit={ submit }/>
-      </header>
     </div>
   );
 }
